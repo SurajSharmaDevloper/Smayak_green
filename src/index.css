@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+body {
+  font-size: 12pt;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background);
+}
+
+:root {
+  --primary: #35b357;
+  --primary-dark: #e8f2ec;
+  --secondary: #4a5568;
+  --background: #e8f2ec;
+  --border-primary: #59a280;
+  --border-secondary: #c7c7c7;
+  --section: #f3f3f3;
+  --card: #ffffff;
+  --card-head: #f5f5f5;
+  --background-second: #e2f2f2;
+  --text: #444444;
+  --text-primary: #31784b;
+  --text-secondary: #5f9e74;
+  --heading: #5f9e74;
+  --sub-heading: #494949;
+  --header: #90d23f;
+}
+@layer utilities {
+  /* Backgrounds */
+  .bg-header {
+    background-color: var(--header);
+  }
+  .bg-primary {
+    background-color: var(--primary);
+  }
+  .bg-primary-dark {
+    background-color: var(--primary-dark);
+  }
+  .bg-secondary {
+    background-color: var(--secondary);
+  }
+  .bg-background {
+    background-color: var(--background);
+  }
+  .bg-background-second {
+    background-color: var(--background-second);
+  }
+  .bg-section {
+    background-color: var(--section);
+  }
+  .bg-card {
+    background-color: var(--card);
+  }
+  .bg-card-head {
+    background-color: var(--card-head);
+  }
+
+  /* Text */
+  .text-primary {
+    color: var(--text-primary);
+  }
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+  .text-heading {
+    color: var(--heading);
+  }
+  .text-sub-heading {
+    color: var(--sub-heading);
+  }
+  .text-text {
+    color: var(--text);
+  }
+
+  /* Borders */
+  .border-primary {
+    border-color: var(--border-primary);
+  }
+  .border-primary-1 {
+    border-color: var(--primary);
+  }
+
+  .border-secondary {
+    border-color: var(--border-secondary);
+  }
+}
+button {
+  font-weight: 600;
+}
+li {
+  font-weight: 500;
+}
+button {
+  text-wrap: nowrap;
+}
