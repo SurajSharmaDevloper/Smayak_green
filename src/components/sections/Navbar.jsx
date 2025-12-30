@@ -1,150 +1,183 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "/NoBack_Logo.png";
+import Input from "../base/Input"; // adjust path if needed
 
 const navItemClass = ({ isActive }) =>
-  `relative flex items-center gap-2 cursor-pointer transition
-   after:content-[''] after:absolute after:left-0 after:bottom-0
-   after:h-[2px] after:bg-primary after:transition-all after:duration-300
-   ${
-     isActive
-       ? "text-primary after:w-full"
-       : "text-text after:w-0 hover:after:w-full hover:text-primary"
-   }`;
+  `flex items-center gap-2 font-medium transition
+   ${isActive ? "text-green-600" : "text-text hover:text-green-600"}`;
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Close mobile menu when switching to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <nav className="w-full sticky top-0 z-50 bg-white border-b border-gray-200">
-      {/* Top Info Bar */}
-      <div className="w-full flex items-center justify-between px-10 py-2 bg-primary text-white text-sm">
-        <div className="flex items-center gap-5">
-          <span className="flex items-center gap-1">
-            <i className="fa-regular fa-envelope"></i>
-            <p className="hidden sm:block">support@sansiddhi.co.in</p>
-          </span>
-          <span className="flex items-center gap-1">
-            <i className="fa-solid fa-phone"></i>
-            <p className="hidden sm:block">+91-9899210941</p>
-          </span>
+      {/* ================= TOP BAR ================= */}
+      <div className="w-full bg-primary text-white text-sm">
+        <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <i className="fa-regular fa-handshake"></i>
+            <span>Partner With Us</span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:block">Follow Us:</span>
+            <i className="fa-brands fa-facebook-f cursor-pointer"></i>
+            <i className="fa-brands fa-twitter cursor-pointer"></i>
+            <i className="fa-brands fa-youtube cursor-pointer"></i>
+            <i className="fa-brands fa-linkedin-in cursor-pointer"></i>
+          </div>
         </div>
-        <a className="font-semibold underline hover:text-gray-200" href="#">
-          Partner With Us
-        </a>
       </div>
 
-      {/* Main Navbar */}
-      <div className="w-[95%] mx-auto flex items-center justify-between py-2">
-        {/* Logo */}
-        <div className="">
+      {/* ================= MAIN NAV ================= */}
+      <div className="relative">
+        <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
+          {/* Logo */}
           <NavLink to="/" className="flex flex-col items-center">
-            <img src={Logo} className="w-24" alt="Sansiddhi Logo" />
-            <div className="font-[Pacifico] -mt-3 ps-3">
-              <span className="font-semibold text-md text-text">Samayak </span>
-              <span className="text-green-500/70 -mt-1.5 font-semibold text-md">
-                Green
-              </span>
+            <img src={Logo} alt="Logo" className="w-20" />
+            <div className="flex gap-1 -mt-2 font-[Pacifico] text-xs">
+              <span className="text-neutral-700">Samyak</span>
+              <span className="text-primary">Green</span>
             </div>
           </NavLink>
-        </div>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-10">
-          <ul className="flex items-center gap-8 font-medium">
+          {/* Desktop Menu */}
+          <ul className="hidden lg:flex items-center gap-8">
             <li>
               <NavLink to="/" className={navItemClass}>
-                <i className="fa-solid fa-house text-xs"></i>
-                Home
+                <i className="fa-solid fa-house"></i> Home
               </NavLink>
             </li>
-
             <li>
               <NavLink to="/aboutus" className={navItemClass}>
-                <i className="fa-solid fa-circle-info text-sm"></i>
-                About
+                <i className="fa-solid fa-circle-info"></i> About Us
               </NavLink>
             </li>
-
             <li>
               <NavLink to="/recipies_database" className={navItemClass}>
-                <i class="fa-solid fa-database"></i>
-                Recipes Databases
+                <i className="fa-solid fa-database"></i> Recipes Database
               </NavLink>
             </li>
             <li>
-              <NavLink to="/services" className={navItemClass}>
-                <i class="fa-solid fa-bowl-food"></i>
-                Homemade
+              <NavLink to="/homemade" className={navItemClass}>
+                <i className="fa-solid fa-bowl-food"></i> Homemade
               </NavLink>
             </li>
           </ul>
 
-          {/* Auth Buttons */}
-          <div className="flex items-center">
-            <NavLink
-              to="/signup"
-              className="bg-primary text-white px-3 py-1.5 rounded-l-lg hover:bg-secondary"
+          {/* Right Icons */}
+          <div className="flex items-center gap-6 text-text">
+            {/* Desktop Search Icon */}
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="hidden lg:block text-lg hover:text-green-600"
             >
-              Sign Up
-            </NavLink>
-            <NavLink
-              to="/login"
-              className="bg-secondary text-white px-3 py-1.5 rounded-r-lg hover:opacity-90"
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+            {/* Cart */}
+            <div className="relative cursor-pointer">
+              <i className="fa-solid fa-cart-shopping"></i>
+              <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                3
+              </span>
+            </div>
+
+            {/* Mobile Toggle */}
+            <button
+              onClick={() => {
+                setMenuOpen(!menuOpen);
+                setSearchOpen(false); // close desktop search
+              }}
+              className="lg:hidden text-2xl"
             >
-              Login
-            </NavLink>
+              <i className="fa-solid fa-bars"></i>
+            </button>
           </div>
         </div>
 
-        {/* Mobile Toggle */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden text-2xl text-text"
-          aria-label="Toggle menu"
-        >
-          <i className="fa-solid fa-bars"></i>
-        </button>
+        {/* ================= DESKTOP SEARCH DROPDOWN ================= */}
+        {searchOpen && (
+          <div className="hidden lg:block absolute left-0 top-full w-full bg-white shadow-md border-t border-green-200 z-40">
+            <div className="max-w-xl mx-auto px-6 py-4 flex gap-4">
+              <Input placeholder="Search traditional recipes, ingredients, regions..." />
+              <button className="bg-green-600 text-white px-6 py-2 rounded-lg">
+                Search
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Mobile Menu */}
+      {/* ================= MOBILE MENU ================= */}
+      {/* ================= CLICK OUTSIDE BACKDROP ================= */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
-          <ul className="flex flex-col p-4 gap-4 font-medium">
-            {[
-              { name: "Home", path: "/" },
-              { name: "About", path: "/aboutus" },
-              { name: "Engagement", path: "/engagement" },
-              { name: "Contact", path: "/contact" },
-            ].map((item) => (
-              <li key={item.name}>
-                <NavLink
-                  to={item.path}
-                  onClick={() => setMenuOpen(false)}
-                  className={({ isActive }) =>
-                    isActive ? "text-primary font-semibold" : "text-text"
-                  }
-                >
-                  {item.name}
-                </NavLink>
-              </li>
-            ))}
+        <div
+          className="fixed inset-0 top-28 z-40"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
 
-            <div className="flex mt-4">
-              <NavLink
-                to="/signup"
-                className="bg-primary text-white px-4 py-2 rounded-l-lg w-1/2 text-center"
-              >
-                Sign Up
-              </NavLink>
-              <NavLink
-                to="/login"
-                className="bg-secondary text-white px-4 py-2 rounded-r-lg w-1/2 text-center"
-              >
-                Login
-              </NavLink>
+      {/* ================= MOBILE MENU ================= */}
+      {menuOpen && (
+        <div className="lg:hidden absolute top-full left-0 w-full z-50 bg-white border-t border-gray-200 shadow-md">
+          <div
+            className="px-6 py-4 space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Mobile Search */}
+            <div className="flex gap-3">
+              <Input placeholder="Search recipes, ingredients..." />
+              <button className="bg-green-600 text-white px-4 py-2 rounded-lg">
+                Go
+              </button>
             </div>
-          </ul>
+
+            {/* Links */}
+            <ul className="flex flex-col gap-4">
+              <NavLink
+                to="/"
+                onClick={() => setMenuOpen(false)}
+                className={navItemClass}
+              >
+                <i className="fa-solid fa-house"></i> Home
+              </NavLink>
+              <NavLink
+                to="/aboutus"
+                onClick={() => setMenuOpen(false)}
+                className={navItemClass}
+              >
+                <i className="fa-solid fa-circle-info"></i> About Us
+              </NavLink>
+              <NavLink
+                to="/recipies_database"
+                onClick={() => setMenuOpen(false)}
+                className={navItemClass}
+              >
+                <i className="fa-solid fa-database"></i> Recipes Database
+              </NavLink>
+              <NavLink
+                to="/homemade"
+                onClick={() => setMenuOpen(false)}
+                className={navItemClass}
+              >
+                <i className="fa-solid fa-bowl-food"></i> Homemade
+              </NavLink>
+            </ul>
+          </div>
         </div>
       )}
     </nav>

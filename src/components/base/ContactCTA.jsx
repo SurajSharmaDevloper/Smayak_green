@@ -22,8 +22,8 @@ const ContactCTA = () => {
       <div className="relative max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           {/* Left Title */}
-          <h2 className="text-white text-xl sm:text-2xl font-semibold tracking-wide">
-            Sansiddhi Foodworks Services
+          <h2 className="text-white font-[Pacifico] text-2xl sm:text-3xl font-semibold tracking-wide">
+            Samyak <span className="text-primary">Green</span>  
           </h2>
 
           {/* Right Actions */}

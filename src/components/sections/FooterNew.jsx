@@ -14,7 +14,7 @@ const FooterNew = () => {
           </div>
 
           <p className="text-sm text-gray-200 leading-relaxed mb-6">
-            Sansiddhi serves authentic traditional food crafted with care,
+            Sansiddhi samyak green serves authentic traditional food crafted with care,
             quality ingredients, and time-tested recipes—bringing taste, trust,
             and tradition to every meal.
           </p>
@@ -117,7 +117,7 @@ const FooterNew = () => {
                 href="mailto:support@sansiddhi.co.in"
                 className="text-[#35B357] font-semibold"
               >
-                support@sansiddhi.co.in
+                support@samyakgreen.sansiddhi.co.in
               </a>
             </p>
           </div>

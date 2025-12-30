@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import banner_2 from "../../assets/images/BANNER-2.png";
-import banner_3 from "../../assets/images/BANNER-3.png";
-import banner_4 from "../../assets/images/BANNER-4.jpg";
+import banner_2 from "../../assets/Foods/Banner_1.png";
+import banner_3 from "../../assets/Foods/Banner_2.png";
+import banner_4 from "../../assets/Foods/Banner_3.png";
 
 const HeroSlider = () => {
   const slides = [banner_2, banner_3, banner_4];
@@ -19,14 +19,16 @@ const HeroSlider = () => {
 
   useEffect(() => {
     if (isHovered) return;
-
     const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
   }, [isHovered, slides.length]);
 
   return (
     <section
-      className="relative w-full h-[30vh] sm:h-[35vh] lg:h-[70vh] overflow-hidden"
+      className="
+        relative w-full overflow-hidden
+        h-[50vh] sm:h-[60vh] lg:h-[75vh]
+      "
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -43,42 +45,96 @@ const HeroSlider = () => {
             alt={`Banner ${index + 1}`}
             className="w-full h-full object-cover"
           />
+
+          {/* Overlay */}
+          <div
+            className="
+              absolute inset-0 bg-linear-to-r
+              from-black/85 via-black/65 to-black/30
+              sm:from-black/70 sm:via-black/40 sm:to-transparent
+            "
+          />
         </div>
       ))}
 
-      {/* Previous Button */}
+      {/* Content */}
+      <div className="absolute inset-0 z-10 flex items-center">
+        <div className="w-[94%] max-w-6xl mx-auto px-2 sm:px-4">
+          <h1
+            className="
+              text-white font-bold leading-tight
+              text-base sm:text-3xl lg:text-6xl
+            "
+          >
+            From Community Kitchens
+            <br className="block" />
+            to Collective Wellbeing
+          </h1>
+
+          <p
+            className="
+              mt-1 sm:mt-4 max-w-xl
+              text-[11px] sm:text-base lg:text-lg
+              text-gray-200
+            "
+          >
+            Preserving India’s traditional food wisdom for sustainable <br />{" "}
+            nutrition and healthier lives.
+          </p>
+
+          <div className="mt-3 sm:mt-6 flex flex-col sm:flex-row gap-2 sm:gap-4">
+            <button
+              className="
+                px-3 sm:px-6 py-2 sm:py-3
+                bg-green-600 hover:bg-green-700
+                text-white rounded-full
+                text-[11px] sm:text-sm
+                font-medium transition
+              "
+            >
+              Explore Traditional Recipes
+            </button>
+
+            <button
+              className="
+                px-3 sm:px-6 py-2 sm:py-3
+                border border-white/60
+                text-white rounded-full
+                text-[11px] sm:text-sm
+                font-medium hover:bg-white hover:text-black transition
+              "
+            >
+              Learn Our Mission
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Controls */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 
-                   bg-black/40 hover:bg-black/60 text-white 
-                   w-10 h-10 rounded-full flex items-center justify-center"
+        className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/60 text-white w-10 h-10 rounded-full items-center justify-center"
       >
         <i className="fa-solid fa-chevron-left"></i>
       </button>
 
-      {/* Next Button */}
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 
-                   bg-black/40 hover:bg-black/60 text-white 
-                   w-10 h-10 rounded-full flex items-center justify-center"
+        className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/60 text-white w-10 h-10 rounded-full items-center justify-center"
       >
         <i className="fa-solid fa-chevron-right"></i>
       </button>
 
       {/* Pagination */}
-      <div
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 
-                      flex gap-2 z-20"
-      >
+      <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
+            className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all ${
               current === index
                 ? "bg-green-600 scale-110"
-                : "bg-green-500/20 hover:bg-white"
+                : "bg-green-500/30 hover:bg-white"
             }`}
           />
         ))}

@@ -23,7 +23,7 @@ const TraditionalFoodHero = () => {
             Limited Time Offer
           </p>
 
-          <p className="text-gray-300 mt-4 max-w-lg">
+          <p className="text-gray-300 mt-4 text-center sm:text-center md:text-start max-w-lg">
             Experience the authentic taste of India’s regional kitchens. Freshly
             prepared traditional dishes using age-old recipes, seasonal
             ingredients, and cultural heritage.
