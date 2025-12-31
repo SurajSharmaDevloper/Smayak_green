@@ -9,12 +9,12 @@ const FooterNew = () => {
           <div className="flex items-center gap-3 mb-4">
             {/* Replace with your logo */}
             <div className="h-24 w-24 rounded-full bg-white flex items-start justify-center text-white font-semibold">
-              <img src="/NoBack_Logo.png" alt="" />
+              <img src="/logo.png" alt="" />
             </div>
           </div>
 
           <p className="text-sm text-gray-200 leading-relaxed mb-6">
-            Sansiddhi samyak green serves authentic traditional food crafted with care,
+            Samyak green serves authentic traditional food crafted with care,
             quality ingredients, and time-tested recipes—bringing taste, trust,
             and tradition to every meal.
           </p>
@@ -42,17 +42,19 @@ const FooterNew = () => {
                 Navigation
               </h4>
               <ul className="space-y-3 text-sm text-gray-300">
-                {["Home", "About", "Recipies Databases", "Home Made"].map((item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="hover:text-[#35B357] transition flex items-center gap-2"
-                    >
-                      <span className="text-[#35B357]">›</span>
-                      {item}
-                    </a>
-                  </li>
-                ))}
+                {["Home", "About", "Recipies Databases", "Home Made"].map(
+                  (item) => (
+                    <li key={item}>
+                      <a
+                        href="#"
+                        className="hover:text-[#35B357] transition flex items-center gap-2"
+                      >
+                        <span className="text-[#35B357]">›</span>
+                        {item}
+                      </a>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
             <div>
@@ -117,7 +119,7 @@ const FooterNew = () => {
                 href="mailto:support@sansiddhi.co.in"
                 className="text-[#35B357] font-semibold"
               >
-                support@samyakgreen.sansiddhi.co.in
+                support@samyakgreen.co.in
               </a>
             </p>
           </div>

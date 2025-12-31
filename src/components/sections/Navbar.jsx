@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import Logo from "/NoBack_Logo.png";
+import Logo from "/logo.png";
 import Input from "../base/Input"; // adjust path if needed
 
 const navItemClass = ({ isActive }) =>
@@ -48,10 +48,6 @@ const Navbar = () => {
           {/* Logo */}
           <NavLink to="/" className="flex flex-col items-center">
             <img src={Logo} alt="Logo" className="w-20" />
-            <div className="flex gap-1 -mt-2 font-[Pacifico] text-xs">
-              <span className="text-neutral-700">Samyak</span>
-              <span className="text-primary">Green</span>
-            </div>
           </NavLink>
 
           {/* Desktop Menu */}
