@@ -1,4 +1,4 @@
-import banner from "../../assets/images/officebanner.jpg";
+import banner from "../../assets/Foods/about.jpg";
 const ContactCTA = () => {
   return (
     <section className="relative overflow-hidden">
@@ -23,14 +23,14 @@ const ContactCTA = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           {/* Left Title */}
           <h2 className="text-white font-[Pacifico] text-2xl sm:text-3xl font-semibold tracking-wide">
-            Samyak <span className="text-primary">Green</span>  
+            Samyak <span className="text-primary">Green</span>
           </h2>
 
           {/* Right Actions */}
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Call CTA */}
             <a
-              href="tel:+919899210941"
+              href="tel:+91-9881210956="
               className="group flex items-center gap-3
                          bg-white/10 text-white
                          px-5 py-3 rounded-xl text-sm font-medium
@@ -42,12 +42,12 @@ const ContactCTA = () => {
               >
                 <i class="fa-solid fa-phone"></i>
               </span>
-              Call Us : +91-9899210941
+              Call Us : +91-9881210956
             </a>
 
             {/* Email CTA */}
             <a
-              href="mailto:support@sansiddhi.co.in"
+              href="mailto:support@samyakgreen.co.in"
               className="group flex items-center gap-3
                          bg-white/10 text-white
                          px-5 py-3 rounded-xl text-sm font-medium
@@ -59,7 +59,7 @@ const ContactCTA = () => {
               >
                 <i class="fa-regular fa-envelope"></i>
               </span>
-              Mail Us : support@sansiddhi.co.in
+              Mail Us : support@samyakgreen.co.in
             </a>
           </div>
         </div>

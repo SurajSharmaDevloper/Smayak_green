@@ -106,7 +106,7 @@ const FooterNew = () => {
             <p>
               <span className="font-medium text-gray-100">Tel:</span>{" "}
               <a
-                href="tel:+919899210941"
+                href="tel:+91-9881210956"
                 className="text-[#35B357] font-semibold"
               >
                 +91-9899210941
@@ -116,7 +116,7 @@ const FooterNew = () => {
             <p>
               <span className="font-medium text-gray-100">Email:</span>{" "}
               <a
-                href="mailto:support@sansiddhi.co.in"
+                href="mailto:support@samyakgreen.co.in"
                 className="text-[#35B357] font-semibold"
               >
                 support@samyakgreen.co.in
