@@ -1,74 +1,116 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Dropdown = ({
-  label,
-  options = [],
-  placeholder = "Select option",
-  value,
-  onChange,
-}) => {
+const Dropdown = ({ label, placeholder, options, value, onChange }) => {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const [search, setSearch] = useState("");
+  const [openUp, setOpenUp] = useState(false);
 
+  const triggerRef = useRef(null);
+  const dropdownRef = useRef(null);
+
+  const filteredOptions = options.filter((opt) =>
+    opt.toLowerCase().includes(search.toLowerCase())
+  );
+
+  /* Detect available space */
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (open && triggerRef.current && dropdownRef.current) {
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const dropdownHeight = dropdownRef.current.offsetHeight;
+
+      const spaceBelow = window.innerHeight - triggerRect.bottom;
+      const spaceAbove = triggerRect.top;
+
+      setOpenUp(spaceBelow < dropdownHeight && spaceAbove > spaceBelow);
+    }
+  }, [open, search, options.length]);
 
   return (
-    <div className="w-full" ref={ref}>
+    <div className="relative" ref={triggerRef}>
       {label && (
-        <label className="block mb-1 text-sm font-medium text-gray-700">
+        <label className="text-sm font-medium mb-1 block text-gray-700">
           {label}
         </label>
       )}
 
-      {/* Select Box */}
-      <div
-        onClick={() => setOpen(!open)}
-        className="relative cursor-pointer rounded-lg border border-gray-300 bg-neutral-100 px-4 py-2
-                   text-sm text-gray-700 flex justify-between items-center
-                   hover:border-lime-300 focus-within:ring-2 focus-within:ring-lime-300"
+      {/* TRIGGER */}
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        className={`
+          w-full px-3 py-2 text-left rounded-lg bg-white
+          border border-lime-300
+          text-gray-800 text-sm
+          outline-none
+          transition
+          focus:border-lime-400 focus:ring-2 focus:ring-lime-200
+          hover:border-lime-400
+        `}
       >
-        <span className={value ? "text-gray-900" : "text-gray-700"}>
-          {value || placeholder}
-        </span>
-
-        <svg
-          className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeWidth="2" d="M19 9l-7 7-7-7" />
-        </svg>
-
-        {/* Dropdown */}
-        {open && (
-          <ul
-            className="absolute z-20 top-full left-0 mt-2 w-full rounded-xl
-                         bg-neutral-200 shadow-lg border border-gray-200 overflow-hidden"
-          >
-            {options.map((opt, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  onChange(opt);
-                  setOpen(false);
-                }}
-                className="px-4 py-3 text-sm hover:bg-indigo-50 cursor-pointer"
-              >
-                {opt}
-              </li>
-            ))}
-          </ul>
+        {value || (
+          <span className="text-gray-400">{placeholder}</span>
         )}
-      </div>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            ref={dropdownRef}
+            initial={{ opacity: 0, y: openUp ? -8 : 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: openUp ? -8 : 8 }}
+            className={`
+              absolute z-30 w-full rounded-xl
+              bg-white border border-lime-200
+              shadow-lg
+              ${openUp ? "bottom-full mb-2" : "top-full mt-2"}
+            `}
+          >
+            {/* SEARCH */}
+            <input
+              className="
+                w-full px-3 py-2 text-sm
+                border-b border-lime-200
+                outline-none
+                focus:border-lime-400
+                placeholder:text-gray-400
+              "
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+
+            {/* OPTIONS */}
+            <div className="max-h-48 overflow-y-auto">
+              {filteredOptions.length ? (
+                filteredOptions.map((opt) => (
+                  <div
+                    key={opt}
+                    onClick={() => {
+                      onChange(opt);
+                      setOpen(false);
+                      setSearch("");
+                    }}
+                    className={`
+                      px-3 py-2 text-sm cursor-pointer
+                      transition
+                      hover:bg-lime-50
+                      ${opt === value ? "bg-lime-100 text-lime-800 font-medium" : "text-gray-700"}
+                    `}
+                  >
+                    {opt}
+                  </div>
+                ))
+              ) : (
+                <p className="px-3 py-2 text-sm text-gray-400">
+                  No results
+                </p>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

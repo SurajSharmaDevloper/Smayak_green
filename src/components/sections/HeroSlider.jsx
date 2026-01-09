@@ -1,7 +1,22 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import banner_2 from "../../assets/Foods/Banner_1.png";
 import banner_3 from "../../assets/Foods/Banner_2.png";
 import banner_4 from "../../assets/Foods/Banner_3.png";
+
+const overlayVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    y: -20,
+    transition: { duration: 0.4, ease: "easeIn" },
+  },
+};
 
 const HeroSlider = () => {
   const slides = [banner_2, banner_3, banner_4];
@@ -25,24 +40,23 @@ const HeroSlider = () => {
 
   return (
     <section
-      className="
-        relative w-full overflow-hidden
-        h-[50vh] sm:h-[60vh] lg:h-[75vh]
-      "
+      className="relative w-full bg-neutral-900/30 overflow-hidden h-[50vh] sm:h-[60vh] lg:h-[75vh]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Slides */}
-      {slides.map((img, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            current === index ? "opacity-100" : "opacity-0"
-          }`}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          className="absolute inset-0"
+          initial={{ opacity: 0, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.02 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
         >
           <img
-            src={img}
-            alt={`Banner ${index + 1}`}
+            src={slides[current]}
+            alt={`Banner ${current + 1}`}
             className="w-full h-full object-cover"
           />
 
@@ -54,83 +68,107 @@ const HeroSlider = () => {
               sm:from-black/70 sm:via-black/40 sm:to-transparent
             "
           />
-        </div>
-      ))}
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Content */}
+      {/* Overlay Content */}
       <div className="absolute inset-0 z-10 flex items-center">
-        <div className="w-[94%] max-w-6xl mx-auto px-2 sm:px-4">
-          <h1
-            className="
-              text-white font-bold leading-tight
-              text-base sm:text-3xl lg:text-6xl
-            "
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`overlay-${current}`}
+            variants={overlayVariants}
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: false, amount: 0.4 }}
+            className="w-[94%] max-w-6xl mx-auto px-2 sm:px-4"
           >
-            From Community Kitchens
-            <br className="block" />
-            to Collective Wellbeing
-          </h1>
-
-          <p
-            className="
-              mt-1 sm:mt-4 max-w-xl
-              text-[11px] sm:text-base lg:text-lg
-              text-gray-200
-            "
-          >
-            Preserving India’s traditional food wisdom for sustainable <br />{" "}
-            nutrition and healthier lives.
-          </p>
-
-          <div className="mt-3 sm:mt-6 flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <button
+            <h1
               className="
-                px-3 sm:px-6 py-2 sm:py-3
-                bg-green-600 hover:bg-green-700
-                text-white rounded-full
-                text-[11px] sm:text-sm
-                font-medium transition
+                text-white font-bold leading-tight
+                text-base sm:text-3xl lg:text-5xl
               "
             >
-              Explore Traditional Recipes
-            </button>
+              Preserving Traditional Food Wisdom.
+              <br />
+              Empowering Healthy Futures.
+            </h1>
 
-            <button
+            <p
               className="
-                px-3 sm:px-6 py-2 sm:py-3
-                border border-white/60
-                text-white rounded-full
-                text-[11px] sm:text-sm
-                font-medium hover:bg-white hover:text-black transition
+                mt-1 sm:mt-4 max-w-xl
+                text-[11px] sm:text-base lg:text-lg
+                text-gray-200
               "
             >
-              Learn Our Mission
-            </button>
-          </div>
-        </div>
+              Preserving India’s traditional food wisdom for sustainable
+              <br />
+              nutrition and healthier lives.
+            </p>
+
+            <div className="mt-3 sm:mt-6 flex flex-col sm:flex-row gap-2 sm:gap-4">
+              <motion.button
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.96 }}
+                className="
+                  px-3 sm:px-6 py-2 sm:py-3
+                  bg-green-600 hover:bg-green-700
+                  text-white rounded-full
+                  text-[11px] sm:text-sm
+                  font-medium transition
+                "
+              >
+                Explore Traditional Recipes
+              </motion.button>
+
+              <motion.button
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.96 }}
+                className="
+                  px-3 sm:px-6 py-2 sm:py-3
+                  border border-white/60
+                  text-white rounded-full
+                  text-[11px] sm:text-sm
+                  font-medium hover:bg-white hover:text-black transition
+                "
+              >
+                Learn Our Mission
+              </motion.button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Controls */}
-      <button
+      <motion.button
         onClick={prevSlide}
-        className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/60 text-white w-10 h-10 rounded-full items-center justify-center"
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.95 }}
+        className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-20
+                   bg-black/40 hover:bg-black/60 text-white
+                   w-10 h-10 rounded-full items-center justify-center"
       >
         <i className="fa-solid fa-chevron-left"></i>
-      </button>
+      </motion.button>
 
-      <button
+      <motion.button
         onClick={nextSlide}
-        className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/60 text-white w-10 h-10 rounded-full items-center justify-center"
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.95 }}
+        className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-20
+                   bg-black/40 hover:bg-black/60 text-white
+                   w-10 h-10 rounded-full items-center justify-center"
       >
         <i className="fa-solid fa-chevron-right"></i>
-      </button>
+      </motion.button>
 
       {/* Pagination */}
       <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         {slides.map((_, index) => (
-          <button
+          <motion.button
             key={index}
             onClick={() => setCurrent(index)}
+            whileHover={{ scale: 1.2 }}
             className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all ${
               current === index
                 ? "bg-green-600 scale-110"

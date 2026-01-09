@@ -30,32 +30,47 @@ const testimonialsData = [
     name: "Sunita Rao",
     role: "Former School Principal",
   },
+  {
+    message: "The platform is simple, respectful, and truly values experience.",
+    name: "Sunita Rao",
+    role: "Former School Principal",
+  },
+  {
+    message: "The platform is simple, respectful, and truly values experience.",
+    name: "Sunita Rao",
+    role: "Former School Principal",
+  },
 ];
+
+const leftVariants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: "easeOut" },
+  },
+};
+
+const rightVariants = {
+  hidden: { opacity: 0, x: 50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: "easeOut", delay: 0.1 },
+  },
+};
 
 const Testimonial = () => {
   return (
-    <motion.section
-      className="w-full bg-linear-to-r from-green-900/70 to-black/80 py-10 overflow-hidden"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, amount: 0.3 }}
-      variants={{
-        hidden: { opacity: 0 },
-        visible: {
-          opacity: 1,
-          transition: { duration: 0.6, ease: "easeOut" },
-        },
-      }}
-    >
+    <section className="w-full bg-linear-to-r from-green-900/70 to-black/80 py-10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* LEFT IMAGE */}
           <motion.div
-            initial={{ opacity: 0, x: -40, scale: 0.95 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            variants={leftVariants}
+            initial="hidden" // reload animation
+            whileInView="visible" // scroll animation
             viewport={{ once: false, amount: 0.4 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            whileHover={{ scale: 1.03 }}
             className="relative h-80 rounded-3xl overflow-hidden"
           >
             <img
@@ -69,11 +84,11 @@ const Testimonial = () => {
 
             {/* Play Button */}
             <motion.div
-              whileHover={{ scale: 1.12 }}
-              transition={{ type: "spring", stiffness: 250, damping: 15 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <div className="w-20 h-20 rounded-full border-2 border-white/60 flex items-center justify-center cursor-pointer">
+              <div className="w-20 h-20 rounded-full border-2 border-white/60 flex items-center justify-center cursor-pointer transition">
                 <span className="text-white text-2xl ml-1">▶</span>
               </div>
             </motion.div>
@@ -84,10 +99,10 @@ const Testimonial = () => {
 
           {/* RIGHT CONTENT */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            variants={rightVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: false, amount: 0.4 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-center lg:text-left"
           >
             <p className="text-green-500 font-semibold tracking-wide uppercase mb-2">
@@ -98,12 +113,11 @@ const Testimonial = () => {
               What Our Clients Say
             </h2>
 
-            {/* SLIDER (LEFT UNTOUCHED) */}
             <TestimonialSlider testimonials={testimonialsData} />
           </motion.div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

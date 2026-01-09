@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+
 import slide1 from "../../assets/slider/01_dishes.png";
 import slide2 from "../../assets/slider/02_dishes.png";
 import slide3 from "../../assets/slider/03_dishes.png";
@@ -8,16 +10,9 @@ import slide6 from "../../assets/slider/07_dishes.png";
 import slide7 from "../../assets/slider/08_dishes.png";
 import slide8 from "../../assets/slider/09_dishes.png";
 import slide9 from "../../assets/slider/10_dishes.png";
-import slide10 from "../../assets/slider/11_dishes.png";
 
 const foodItems = [
-  {
-    id: 1,
-    title: "Poha",
-    origin: "Madhya Pradesh & Maharashtra",
-    price: "₹40",
-    image: slide1,
-  },
+  { id: 1, title: "Poha", origin: "Maharashtra", price: "₹40", image: slide1 },
   {
     id: 2,
     title: "Pitla Bhakri",
@@ -39,20 +34,8 @@ const foodItems = [
     price: "₹150",
     image: slide4,
   },
-  {
-    id: 5,
-    title: "Kanika",
-    origin: "Odisha",
-    price: "₹130",
-    image: slide5,
-  },
-  {
-    id: 6,
-    title: "Dalma",
-    origin: "Odisha",
-    price: "₹140",
-    image: slide6,
-  },
+  { id: 5, title: "Kanika", origin: "Odisha", price: "₹130", image: slide5 },
+  { id: 6, title: "Dalma", origin: "Odisha", price: "₹140", image: slide6 },
   {
     id: 7,
     title: "Vada Pav",
@@ -76,7 +59,7 @@ const foodItems = [
   },
 ];
 
-// clone items for infinite loop
+// duplicate for infinite loop
 const loopItems = [...foodItems, ...foodItems];
 
 const FoodSlider = () => {
@@ -84,6 +67,7 @@ const FoodSlider = () => {
   const [index, setIndex] = useState(0);
   const CARD_GAP = 24;
 
+  // Auto slide
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => prev + 1);
@@ -92,6 +76,7 @@ const FoodSlider = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Translate slider
   useEffect(() => {
     if (!sliderRef.current) return;
 
@@ -100,7 +85,7 @@ const FoodSlider = () => {
     sliderRef.current.style.transition = "transform 0.7s ease-in-out";
     sliderRef.current.style.transform = `translateX(-${index * cardWidth}px)`;
 
-    // Reset silently when half reached
+    // silent reset
     if (index === foodItems.length) {
       setTimeout(() => {
         sliderRef.current.style.transition = "none";
@@ -111,17 +96,44 @@ const FoodSlider = () => {
   }, [index]);
 
   return (
-    <div className="mx-auto container mt-8 py-12 overflow-hidden">
+    <section className="mx-auto container mt-8 py-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="relative">
-          <div ref={sliderRef} className="flex gap-6">
+        {/* SLIDER ENTER ANIMATION */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="relative"
+        >
+          {/* SLIDER TRACK */}
+          <motion.div
+            ref={sliderRef}
+            className="flex gap-6 will-change-transform"
+          >
             {loopItems.map((item, i) => (
-              <div
+              <motion.div
                 key={i}
-                className="relative min-w-65 bg-background rounded-2xl pt-16 pb-6 px-4 text-center shadow"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.05,
+                  ease: "easeOut",
+                }}
+                whileHover={{ y: -6 }}
+                className="relative min-w-[260px]
+                           bg-background rounded-2xl
+                           pt-16 pb-6 px-4 text-center shadow"
               >
+                {/* Image */}
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2">
-                  <div className="w-24 h-24 rounded-full border-2 border-dashed border-primary-1 p-1 bg-white">
+                  <div
+                    className="w-24 h-24 rounded-full
+                                  border-2 border-dashed
+                                  border-primary-1 p-1 bg-white"
+                  >
                     <img
                       src={item.image}
                       alt={item.title}
@@ -130,14 +142,15 @@ const FoodSlider = () => {
                   </div>
                 </div>
 
+                {/* Content */}
                 <h3 className="font-semibold text-lg mt-2">{item.title}</h3>
-                <p className="text-primary font-bold mt-2">{item.price}</p>
-              </div>
+                <p className="text-primary font-bold mt-2">{item.origin}</p>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 

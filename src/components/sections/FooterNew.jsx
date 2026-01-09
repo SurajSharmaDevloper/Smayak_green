@@ -1,15 +1,28 @@
 import React from "react";
+import { motion } from "framer-motion";
 import LocationMap from "../blocks/LocationMap";
 
 const FooterNew = () => {
   return (
-    <footer className="bg-secondary p-5">
+    <motion.footer
+      className="bg-secondary p-5"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: false, amount: 0.25 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        <div className="w-full p-5">
+        {/* BRAND + SUBSCRIBE */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="w-full p-5"
+        >
           <div className="flex items-center gap-3 mb-4">
-            {/* Replace with your logo */}
-            <div className="h-24 w-24 rounded-full bg-white flex items-start justify-center text-white font-semibold">
-              <img src="/logo.png" alt="" />
+            <div className="h-24 w-24 rounded-full bg-white flex items-center justify-center">
+              <img src="/logo.png" alt="Samyak Green Logo" />
             </div>
           </div>
 
@@ -19,13 +32,18 @@ const FooterNew = () => {
             and tradition to every meal.
           </p>
 
-          {/* Subscribe */}
-          <div className="flex w-full max-w-sm">
+          {/* SUBSCRIBE */}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 200, damping: 18 }}
+            className="flex w-full max-w-sm"
+          >
             <input
               type="email"
               placeholder="Type email"
               className="w-full rounded-l-xl border border-gray-300 px-4 py-2 text-sm
-                         focus:outline-none focus:ring-2 focus:ring-[#35B357] placeholder:text-gray-300"
+                         outline-none focus:ring-2 focus:ring-[#35B357]
+                         placeholder:text-gray-300"
             />
             <button
               className="rounded-r-xl bg-[#35B357] px-5 text-sm font-medium text-white
@@ -33,10 +51,18 @@ const FooterNew = () => {
             >
               Subscribe
             </button>
-          </div>
-        </div>
-        <div>
+          </motion.div>
+        </motion.div>
+
+        {/* NAVIGATION + SUPPORT */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div className="flex w-full pt-10 max-[600px]:pt-0 justify-around flex-wrap">
+            {/* NAVIGATION */}
             <div>
               <h4 className="text-sm font-semibold text-gray-100 mb-4">
                 Navigation
@@ -45,18 +71,22 @@ const FooterNew = () => {
                 {["Home", "About", "Recipies Databases", "Home Made"].map(
                   (item) => (
                     <li key={item}>
-                      <a
+                      <motion.a
                         href="#"
+                        whileHover={{ x: 6 }}
+                        transition={{ duration: 0.2 }}
                         className="hover:text-[#35B357] transition flex items-center gap-2"
                       >
                         <span className="text-[#35B357]">›</span>
                         {item}
-                      </a>
+                      </motion.a>
                     </li>
                   )
                 )}
               </ul>
             </div>
+
+            {/* SUPPORT */}
             <div>
               <h4 className="text-sm font-semibold text-gray-100 mb-4">
                 Support
@@ -69,36 +99,56 @@ const FooterNew = () => {
                   "Privacy Policy",
                 ].map((item) => (
                   <li key={item}>
-                    <a
+                    <motion.a
                       href="#"
+                      whileHover={{ x: 6 }}
+                      transition={{ duration: 0.2 }}
                       className="hover:text-[#35B357] transition flex items-center gap-2"
                     >
                       <span className="text-[#35B357]">›</span>
                       {item}
-                    </a>
+                    </motion.a>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="w-full mt-8 flex justify-center flex-col max-[1150px]:items-center ">
+
+            {/* SOCIAL */}
+            <div className="w-full mt-8 flex justify-center flex-col max-[1150px]:items-center">
               <h4 className="text-sm font-semibold text-center text-gray-100 mb-4">
                 Our Social Media's
               </h4>
-              <div className="text-2xl w-full  text-gray-200 flex gap-10 justify-center">
-                <i class="fa-brands fa-facebook hover:text-green-600"></i>
-                <i class="fa-brands fa-linkedin hover:text-green-600"></i>
-                <i class="fa-brands fa-square-x-twitter hover:text-green-600"></i>
-                <i class="fa-brands fa-instagram hover:text-green-600"></i>
+              <div className="text-2xl text-gray-200 flex gap-10 justify-center">
+                {[
+                  "fa-facebook",
+                  "fa-linkedin",
+                  "fa-square-x-twitter",
+                  "fa-instagram",
+                ].map((icon) => (
+                  <motion.i
+                    key={icon}
+                    whileHover={{ scale: 1.25, color: "#35B357" }}
+                    transition={{ type: "spring", stiffness: 260, damping: 15 }}
+                    className={`fa-brands ${icon} cursor-pointer`}
+                  />
+                ))}
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1">
-          <div>
-            <LocationMap />
-          </div>
+        </motion.div>
+
+        {/* MAP + CONTACT */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-1"
+        >
+          <LocationMap />
+
           <div className="space-y-3 mt-5 text-sm text-gray-300">
-            <p className="text-gray-300">
+            <p>
               <span className="font-medium text-gray-100">Location:</span>{" "}
               Delhi, Mumbai, Gurugram, Faridabad, Lucknow, Kolkata
             </p>
@@ -106,10 +156,10 @@ const FooterNew = () => {
             <p>
               <span className="font-medium text-gray-100">Tel:</span>{" "}
               <a
-                href="tel:+91-9881210956"
+                href="tel:+91-98XXXX0956"
                 className="text-[#35B357] font-semibold"
               >
-                +91-9899210941
+                +91-98XXXX1041
               </a>
             </p>
 
@@ -123,9 +173,9 @@ const FooterNew = () => {
               </a>
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 
